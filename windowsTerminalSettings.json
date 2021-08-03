@@ -2,6 +2,10 @@
     "$schema": "https://aka.ms/terminal-profiles-schema",
     "actions": 
     [
+{ "command": { "action": "moveFocus", "direction": "down" }, "keys": "alt+j" },
+{ "command": { "action": "moveFocus", "direction": "left" }, "keys": "alt+h" },
+{ "command": { "action": "moveFocus", "direction": "right" }, "keys": "alt+l" },
+{ "command": { "action": "moveFocus", "direction": "up" }, "keys": "alt+k" },
         {
             "command": 
             {
@@ -40,7 +44,7 @@
     "defaultProfile": "{00000000-0000-0000-ba54-000000000002}",
     "disableAnimations": true,
     "experimental.rendering.software": true,
-    "focusFollowMouse": true,
+    "focusFollowMouse": false,
     "initialCols": 90,
     "initialRows": 40,
     "profiles": 
