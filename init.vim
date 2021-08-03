@@ -2,12 +2,13 @@ call plug#begin(stdpath('data'))
 
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
-Plug 'Raimondi/delimitMate'
+Plug 'jiangmiao/auto-pairs'
 Plug 'vim-airline/vim-airline'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ervandew/supertab'
+Plug 'vifm/vifm.vim'
 call plug#end()
 
 filetype plugin on
