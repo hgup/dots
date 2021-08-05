@@ -136,7 +136,12 @@ nnoremap <buffer> <localleader>w :set wrap!<cr>
 nnoremap <s-tab> :bp<return>
 nnoremap <tab> :bn<return>
 nnoremap <leader>q :q<return> 
-
+" primeagen remaps
+nnoremap Y y$
+" keeping it centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJz`v
 " c++11 support in syntastic
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
