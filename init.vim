@@ -8,7 +8,6 @@ Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ervandew/supertab'
-Plug 'vifm/vifm.vim'
 call plug#end()
 
 filetype plugin on
@@ -52,32 +51,11 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme = 'onehalfdark'
 let g:airline#extensions#tabline#enabled = 1
 
+let g:spacegray_low_contrast = 1
+
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-
-" airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
 
 highlight Comment cterm=italic gui=italic
 
@@ -115,6 +93,7 @@ set smartindent " allow vim to best-effort guess the indentation
 set pastetoggle=<F1> " enable paste mode
 
 set smartcase
+set ignorecase
 set wildmenu "graphical auto complete menu
 set lazyredraw "redraws the screne when it needs to
 set showmatch "highlights matching brackets
@@ -135,7 +114,7 @@ nnoremap <buffer> <localleader>w :set wrap!<cr>
 " custom remaps
 nnoremap <s-tab> :bp<return>
 nnoremap <tab> :bn<return>
-nnoremap <leader>q :q<return> 
+nnoremap <leader>q :q<return>
 " primeagen remaps
 nnoremap Y y$
 " keeping it centered
