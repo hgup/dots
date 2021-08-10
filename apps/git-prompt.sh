@@ -10,13 +10,15 @@ then
 	. ~/.config/git/git-prompt.sh
 else
 	PS1='\[\033]0;$TITLEPREFIX:$PWD\007\]' # set window title
-	PS1="$PS1"'['                  # new line
-	PS1="$PS1"'\[\033[32m\]'       # change to green
-	PS1="$PS1"'\u@\h '             # user@host<space>
-	PS1="$PS1"'\[\033[35m\]'       # change to purple
-	PS1="$PS1"'\[\033[33m\]'       # change to brownish yellow
-	PS1="$PS1"'\w'                 # current working directory
-	PS1="$PS1"'\[\033[0m\]]'        # change color
+	PS1="$PS1"'\[\033[34m\]['       # blue brackets
+	PS1="$PS1"'\[\033[0m\]h '                 # user@host<space>
+	PS1="$PS1"'\[\033[31m\]@'             		 # user@host<space>
+	PS1="$PS1"'\[\033[0m\] w'                # user@host<space>
+	PS1="$PS1"'\[\033[34m\]] '        # blue brackets
+	PS1="$PS1"'\[\033[0m\] '        # change color
+	PS1="$PS1"'\[\033[01;35m\]'       # change to purple
+	PS1="$PS1"'\W'                 # current working directory
+	PS1="$PS1"'\[\033[0m\]'        # change color
 	if test -z "$WINELOADERNOEXEC"
 	then
 		GIT_EXEC_PATH="$(git --exec-path 2>/dev/null)"
@@ -33,7 +35,7 @@ else
 	fi
 	PS1="$PS1"'\[\033[0m\]'        # change color
 	#PS1="$PS1"'\n'                 # new line
-	PS1="$PS1"' '                 # prompt: always φ
+	PS1="$PS1"' '                 # prompt: always φ
 fi
 
 MSYS2_PS1="$PS1"               # for detection by MSYS2 SDK's bash.basrc

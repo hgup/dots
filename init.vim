@@ -1,13 +1,14 @@
 call plug#begin(stdpath('data'))
 
-Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
-Plug 'vim-airline/vim-airline'
-Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'navarasu/onedark.nvim'
 Plug 'ryanoasis/vim-devicons'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'ervandew/supertab'
+Plug 'itchyny/lightline.vim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'unblevable/quick-scope'
+Plug 'nvim-lua/completion-nvim'
+
 call plug#end()
 
 filetype plugin on
@@ -30,8 +31,13 @@ set foldlevel=99
 "Enable folding with the spacebar
 nnoremap <space> za
 
-" open files with ctrl-p
-nnoremap <c-p> :Files<cr>
+let g:lightline = {
+      \ 'colorscheme': 'one',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ }
 
 au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
     \ set tabstop=4 |
@@ -43,41 +49,41 @@ au BufNewFile,BufRead *.py,*.java,*.cpp,*.c,*.cs,*.rkt,*.h,*.html
     \ set fileformat=unix |
 
 set encoding=utf-8
-
 syntax on
-
-" air-line
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'onehalfdark'
-let g:airline#extensions#tabline#enabled = 1
-
-let g:spacegray_low_contrast = 1
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-highlight Comment cterm=italic gui=italic
-
-set laststatus=2
-" set showtabline=2
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+let g:onedark_style = 'darker'
+"highlight Comment cterm=italic gui=italic
 
 " true colours
 set background=dark
-set t_Co=256
+if !has('gui_running')
+  set t_Co=256
+endif
 
 if (has("nvim"))
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
-
 if (has("termguicolors"))
   set termguicolors
 endif
 
-colorscheme onehalfdark
 
-set nu rnu " relative line numbering
+" checks if your terminal has 24-bit color support
+if (has("termguicolors"))
+    set termguicolors
+    hi LineNr ctermbg=NONE guibg=NONE
+endif
+
+colorscheme onedark
+
+"hi Pmenu guibg=#2F343D guifg=#DCDFE4
+"hi PmenuSel guibg=#98C379 guifg=#282C34
+"hi PmenuThumb guibg=#373C47 guifg=#DCDFE4
+"hi PmenuSbar guibg=#23272E
+
+set nu "rnu " relative line numbering
 set clipboard=unnamedplus " public copy/paste register
+set cursorline
 set ruler
 set nowrap
 set showcmd
@@ -86,6 +92,7 @@ set noshowmode
 set shortmess+=c
 set omnifunc=syntaxcomplete#Complete
 set shell=cmd
+set hidden
 
 set backspace=indent,eol,start " let backspace delete over lines
 set autoindent " enable auto indentation of lines
@@ -115,6 +122,15 @@ nnoremap <buffer> <localleader>w :set wrap!<cr>
 nnoremap <s-tab> :bp<return>
 nnoremap <tab> :bn<return>
 nnoremap <leader>q :q<return>
+nnoremap <leader>1 :b1<return>
+nnoremap <leader>2 :b2<return>
+nnoremap <leader>3 :b3<return>
+nnoremap <leader>4 :b4<return>
+nnoremap <leader>5 :b5<return>
+nnoremap <leader>6 :b6<return>
+nnoremap <leader>7 :b7<return>
+nnoremap <leader>8 :b8<return>
+nnoremap <leader>9 :b9<return>
 " primeagen remaps
 nnoremap Y y$
 " keeping it centered
@@ -126,6 +142,7 @@ let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11'
 
 
+nnoremap <leader>c :so $VIMRUNTIME/syntax/hitest.vim<return>
 " run code
 augroup compileandrun
     autocmd!
@@ -136,3 +153,13 @@ augroup compileandrun
     autocmd filetype c nnoremap <f5> :w <bar> !make %:r && ./%:r <cr>
     autocmd filetype java nnoremap <f5> :w <bar> !javac % && java %:r <cr>
 augroup END
+
+set completeopt=menuone,noinsert,noselect
+let g:completion_matching_stratergy_list = ['exact', 'substring', 'fuzzy']
+lua << EOF
+require'lspconfig'.pylsp.setup{on_attach=require'completion'.on_attach}
+require'lspconfig'.tsserver.setup{}
+EOF
+"COC
+nmap <space>f :CocCommand explorer<CR>
+autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
